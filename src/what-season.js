@@ -21,15 +21,11 @@ function getSeason(date) {
   if (typeof date != 'object' || (!("getMonth" in date))){
     throw new MyThrower('Invalid date!');
   }
-  console.dir('проверка 1 пройдена');
   try {
-    console.dir(isNaN(date));
+    isNaN(date);
   } catch (error) {
     throw new MyThrower('Invalid date!');
   }
-  console.dir('проверка 2 пройдена');
-  console.dir(typeof date.getMonth());
-  console.dir('вызов пройден');
   switch (date.getMonth()) {
     case 11:
     case 0:
