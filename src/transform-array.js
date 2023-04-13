@@ -20,7 +20,6 @@ function MyThrower(message) {
 
 function transform(arr) {
   if (!Array.isArray(arr)) throw new MyThrower("'arr' parameter must be an instance of the Array!");
-  console.dir(arr);
   let result = [], double = false, discard = false, notControl = false, deleted = '';
   loop: for (let elem of arr) {
     if (elem === undefined) continue;
