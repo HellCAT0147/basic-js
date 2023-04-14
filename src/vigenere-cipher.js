@@ -19,14 +19,59 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
+function MyThrower(message) {
+  this.message = message;
+}
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(straight = true) {
+    this.straight = straight;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  
+  encrypt(word, key) {
+    if (!word || !key) {
+      throw new MyThrower('Incorrect arguments!');
+    }
+    let result = '';
+    let j = 0;
+    for (let i = 0; i < word.length; i++) {
+      let letterNum = word.toUpperCase().charCodeAt(i);
+      if (letterNum >= 65 && letterNum <= 90) {
+        let add = key.toUpperCase().charCodeAt(j % (key.length)) - 65;
+        let toResult = letterNum + add;
+        if (toResult > 90) toResult -= 26;
+        result += String.fromCharCode(toResult);
+        j++;
+      } else {
+        result += word[i];
+      }
+    }
+    if (this.straight)
+      return result;
+    else
+      return result.split('').reverse().join('');
+  }
+  decrypt(word, key) {
+    if (!word || !key) {
+      throw new MyThrower('Incorrect arguments!');
+    }
+    let result = '';
+    let j = 0;
+    for (let i = 0; i < word.length; i++) {
+      let letterNum = word.toUpperCase().charCodeAt(i);
+      if (letterNum >= 65 && letterNum <= 90) {
+        let subtract = key.toUpperCase().charCodeAt(j % (key.length)) - 65;
+        let toResult = letterNum - subtract;
+        if (toResult < 65) toResult += 26;
+        result += String.fromCharCode(toResult);
+        j++;
+      } else {
+        result += word[i];
+      }
+    }
+    if (this.straight)
+      return result;
+    else
+      return result.split('').reverse().join('');
   }
 }
 
